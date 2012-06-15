@@ -38,6 +38,7 @@ def autosetup():
 		package_dir		= {
 			''			: 'src',
 		},
+        package_data    = {'': ['*.conf', '*.html', '*.js', '*.sh']},
         include_package_data = True,
 
         zip_safe = False,
@@ -76,5 +77,5 @@ if(__name__ == '__main__'):
     dist = autosetup()
     if(sys.argv[-1] in postgenerate_cache_commands):
         subprocess.Popen(
-            [sys.executable, '-c', 'from restmq import setup_extras; setup_extras.regeneratePluginCache(); print "Regenerating plugin cache..."'],
+            [sys.executable, '-c', 'import sys; sys.path.append("src"); from restmq import setup_extras; setup_extras.regeneratePluginCache(); print "Regenerating plugin cache..."'],
         ).wait()
