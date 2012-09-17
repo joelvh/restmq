@@ -307,7 +307,7 @@ class RedisOperations:
             instances doing the same the policy wont be respected.
         """
         ql = [QUEUE_NAME % self.normalize(queue) for queue in queue_list]
-        res = yield self.redis.brpop(ql) 
+        res = yield redis_cli.brpop(queues) 
         if res is not None:
             q = self.normalize(res[1])                                            
             qpkey = QUEUE_POLICY % q
@@ -330,4 +330,9 @@ class RedisOperations:
 
 
 
+=======
+            defer.returnValue(p, {'key':q, 'value':v})
+        else:
+            defer.returnValue(None)
+>>>>>>> cb539c3044617ca73ba998943719801c7cc720ca
 

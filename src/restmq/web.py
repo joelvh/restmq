@@ -395,6 +395,13 @@ class CometDispatcher(object):
                 print "skipping - no presence"
         except Exception, e:
             print "Exception: ", e
+    
+    def _block_listen_queues(self):
+        while True:
+            ql = [q for q in self.presence.keys() if len(self.presence[q]) > 0]
+            queue, policy, value = yield self.oper.queue_block_multi_get(ql)
+            if value is not None and queue is not None:
+                self._dump(self.presence[queue], value, policy)
 
     def _counters_cleanup(self):
         keys = self.qcounter.keys()
@@ -420,7 +427,6 @@ class CometDispatcher(object):
                 assert policy and contents and isinstance(contents, types.ListType)
             except:
                 defer.returnValue(None)
-             
             self._dump(handlers, contents, policy)
 
     def _dump(self, handlers, contents, policy = None):
