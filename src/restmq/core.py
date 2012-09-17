@@ -325,14 +325,3 @@ class RedisOperations:
         r = itertools.compress(ql, qs)
         defer.returnValue(list(r))
 
-
-
-
-
-
-=======
-            defer.returnValue(p, {'key':q, 'value':v})
-        else:
-            defer.returnValue(None)
->>>>>>> cb539c3044617ca73ba998943719801c7cc720ca
-
